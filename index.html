@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Track your income, manage expenses, calculate savings, and build better money habits with Personal Budget Tracker."
+    />
+    <meta name="theme-color" content="#0f172a" />
+    <title>Personal Budget Tracker | Manage Your Money</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <script src="index.js" defer></script>
+  </head>
+
+  <body>
+    <header class="topbar">
+      <a href="#" class="brand" aria-label="Personal Budget Tracker home">
+        <span class="brand-icon">◈</span>
+        <span>Budget<span class="brand-accent">Wise</span></span>
+      </a>
+
+      <div class="topbar-right">
+        <span class="live-dot"></span>
+        <span>Personal Finance Dashboard</span>
+      </div>
+    </header>
+
+    <main class="dashboard">
+      <section class="welcome">
+        <div>
+          <span class="eyebrow">YOUR MONEY, YOUR FUTURE</span>
+          <h1>Personal Budget Tracker<span class="heading-dot">.</span></h1>
+          <p>Take control of your money. Build better habits. Save smarter.</p>
+        </div>
+        <div class="welcome-icon" aria-hidden="true">↗</div>
+      </section>
+
+      <div class="dashboard-grid">
+        <section class="panel form-panel">
+          <div class="section-heading">
+            <div class="section-icon">01</div>
+            <div>
+              <h2>Your Budget</h2>
+              <p>Enter your financial details below.</p>
+            </div>
+          </div>
+
+          <form id="budgetForm">
+            <div class="field">
+              <label for="userName">Your name</label>
+              <input
+                type="text"
+                id="userName"
+                placeholder="e.g. Riha Begum"
+                maxlength="60"
+                autocomplete="name"
+                required
+              />
+            </div>
+
+            <div class="field">
+              <label for="income">Monthly income ($)</label>
+              <div class="input-wrap">
+                <span class="input-prefix">$</span>
+                <input
+                  type="number"
+                  id="income"
+                  placeholder="5000"
+                  min="0.01"
+                  step="0.01"
+                  required
+                />
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="numExpenses">Number of expenses</label>
+              <input
+                type="number"
+                id="numExpenses"
+                min="0"
+                max="20"
+                step="1"
+                value="3"
+                required
+              />
+              <small class="hint">Add up to 20 expense categories.</small>
+            </div>
+
+            <button type="submit" class="btn btn-primary full-width">
+              <span>＋</span> Set Up My Budget
+            </button>
+          </form>
+
+          <div id="expenseSection" class="expense-section hidden">
+            <div class="section-heading expense-heading">
+              <div class="section-icon">02</div>
+              <div>
+                <h2>Your Expenses</h2>
+                <p>Add a name and amount for each expense.</p>
+              </div>
+            </div>
+
+            <div id="expenseInputs" class="expense-inputs"></div>
+
+            <div class="button-row">
+              <button id="calculateBudget" class="btn btn-success">
+                Calculate Budget
+              </button>
+              <button id="clearBudget" class="btn btn-danger">Clear All</button>
+            </div>
+          </div>
+
+          <p id="formMessage" class="form-message" role="alert"></p>
+        </section>
+
+        <section class="results-column">
+          <div class="section-heading results-heading">
+            <div>
+              <span class="eyebrow">YOUR FINANCIAL OVERVIEW</span>
+              <h2>Budget Summary</h2>
+              <p id="summarySubtitle">Your financial story starts here.</p>
+            </div>
+            <span id="saveStatus" class="save-status">● Ready</span>
+          </div>
+
+          <div class="stats-grid">
+            <article class="stat-card income-card">
+              <div class="stat-top">
+                <span class="stat-label">Total Income</span>
+                <span class="stat-icon">↗</span>
+              </div>
+              <p id="totalIncome" class="stat-value">$0.00</p>
+              <span class="stat-caption">Money coming in</span>
+            </article>
+
+            <article class="stat-card expense-card">
+              <div class="stat-top">
+                <span class="stat-label">Total Expenses</span>
+                <span class="stat-icon">↘</span>
+              </div>
+              <p id="totalExpenses" class="stat-value">$0.00</p>
+              <span class="stat-caption">Money going out</span>
+            </article>
+
+            <article class="stat-card tax-card">
+              <div class="stat-top">
+                <span class="stat-label">Estimated Tax</span>
+                <span class="stat-icon">%</span>
+              </div>
+              <p id="totalTax" class="stat-value">$0.00</p>
+              <span class="stat-caption">10% of income</span>
+            </article>
+
+            <article class="stat-card net-card">
+              <div class="stat-top">
+                <span class="stat-label">Net Income</span>
+                <span class="stat-icon">＋</span>
+              </div>
+              <p id="netIncome" class="stat-value">$0.00</p>
+              <span class="stat-caption">After estimated tax</span>
+            </article>
+
+            <article class="stat-card balance-card">
+              <div class="stat-top">
+                <span class="stat-label">Remaining Balance</span>
+                <span class="stat-icon">＝</span>
+              </div>
+              <p id="balance" class="stat-value">$0.00</p>
+              <span class="stat-caption">After expenses</span>
+            </article>
+
+            <article class="stat-card savings-card">
+              <div class="stat-top">
+                <span class="stat-label">Potential Savings</span>
+                <span class="stat-icon">♡</span>
+              </div>
+              <p id="savings" class="stat-value">$0.00</p>
+              <span class="stat-caption">20% of positive balance</span>
+            </article>
+          </div>
+
+          <article id="statusCard" class="status-card">
+            <div id="statusIcon" class="status-emoji">✦</div>
+            <div>
+              <h3 id="statusTitle">Ready to plan?</h3>
+              <p id="financialStatus">
+                Complete your budget to see your financial health.
+              </p>
+            </div>
+          </article>
+
+          <article class="panel breakdown-panel">
+            <div class="section-heading">
+              <div class="section-icon chart-icon">◔</div>
+              <div>
+                <h2>Expense Breakdown</h2>
+                <p>See where your money goes.</p>
+              </div>
+            </div>
+
+            <div id="expenseBreakdown" class="breakdown-list">
+              <p class="empty-state">
+                Your expense breakdown will appear here after calculation.
+              </p>
+            </div>
+          </article>
+
+          <div class="tip-card">
+            <span class="tip-icon">✦</span>
+            <div>
+              <strong>A little progress every day.</strong>
+              <p>Small savings today can build a better tomorrow.</p>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <footer class="footer">
+      <p>Designed with care <span>♥</span> by Riha Begum</p>
+      <p>Personal Budget Tracker · Built with HTML, CSS & JavaScript</p>
+    </footer>
+  </body>
+</html>
